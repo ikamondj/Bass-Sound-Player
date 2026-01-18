@@ -1,0 +1,20 @@
+[Unit]
+Description=Bass Loop (ALSA, no restart)
+After=sound.target
+Wants=sound.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/aplay -D plughw:1,0 --loop=0 /home/pi/loop.wav
+User=pi
+Group=pi
+
+# No restart — intentional
+Restart=no
+
+# Allow clean stop
+KillSignal=SIGTERM
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target
